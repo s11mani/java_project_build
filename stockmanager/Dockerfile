@@ -1,7 +1,6 @@
-FROM centos:centos7 as base
+FROM s11mani/centos:mvn-installed as base
 ADD . /app
 WORKDIR /app
-RUN yum install maven -y
 RUN mvn clean install
 FROM openjdk:8-jre-alpine
 EXPOSE 8030
