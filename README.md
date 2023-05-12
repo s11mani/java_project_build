@@ -1,1 +1,1 @@
-# java_project_build
+# sample java_project
