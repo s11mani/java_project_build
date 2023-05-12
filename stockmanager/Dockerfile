@@ -1,4 +1,9 @@
-FROM openjdk:8-jre
-ADD target/stockmanager-0.0.1-SNAPSHOT.jar app.jar
+FROM centos:centos7 as base
+ADD . /app
+WORKDIR /app
+RUN yum install maven -y
+RUN mvn clean install
+FROM openjdk:8-jre-alpine
 EXPOSE 8030
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+COPY --from=base /app/target/stockmanager-0.0.1-SNAPSHOT.jar /app/app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
